@@ -1,50 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Scholarship Management</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Hiraya Foundation</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Scholarship Management System</h1>
-    <form id="scholarshipForm">
-        <input type="text" id="studentName" placeholder="Student Name" required>
-        <input type="text" id="program" placeholder="Program" required>
-        <input type="number" id="amount" placeholder="Amount" required>
-        <button type="submit">Add Scholarship</button>
-    </form>
+  <header>
+    <h1>HIRAYA FOUNDATION</h1>
+    <p>WHERE DEDICATION MEETS OPPORTUNITY</p>
+    <p class="tagline">Opening doors for students to grow, learn, and succeed by providing the 
+		scholarships they need to thrive.</p>
+    <div class="buttons">
+      <button onclick="alert('Apply form coming soon')">APPLY</button>
+      <button onclick="alert('Login portal coming soon')">LOG IN</button>
+    </div>
+  </header>
 
-    <h2>Scholarships</h2>
-    <ul id="scholarshipList"></ul>
+  <section>
+    <h2>WHO WE ARE</h2>
+    <p>	Hiraya Foundation is a Filipino non-profit organization 
+		dedicated to nurturing dreams and empowering the next generation. 
+		We strive to create opportunities that help young Filipinos reach their full 
+		potential and make a positive impact on society.
 
-    <script>
-        async function loadScholarships() {
-            const response = await fetch('/scholarships');
-            const scholarships = await response.json();
-            const list = document.getElementById('scholarshipList');
-            list.innerHTML = '';
-            scholarships.forEach(s => {
-                const li = document.createElement('li');
-                li.textContent = `${s.studentName} - ${s.program} - $${s.amount}`;
-                list.appendChild(li);
-            });
-        }
+	At the heart of our work is the Hiraya Foundation College Scholarship Program, which 
+	provides deserving students with financial support, mentorship, and resources to excel 
+	academically. Our scholarships recognize talent, perseverance, and potential, helping 
+	scholars turn their dreams into reality.</p>
+  </section>
 
-        document.getElementById('scholarshipForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                studentName: document.getElementById('studentName').value,
-                program: document.getElementById('program').value,
-                amount: document.getElementById('amount').value
-            };
-            await fetch('/scholarships', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            loadScholarships();
-        });
+  <section>
+    <h2>WHAT WE OFFER</h2>
+    <ul>
+      <li><strong>Monthly Stipend:</strong> Scholars receive a monthly allowance to help cover school and living expenses.</li>
+      <li><strong>Internship Opportunities:</strong> Hands-on experience to build skills and explore career paths.</li>
+      <li><strong>Conferences & Seminars:</strong> Opportunities to expand knowledge and connections.</li>
+    </ul>
+  </section>
 
-        loadScholarships();
-    </script>
+  <section>
+    <h2>OUR IMPACT</h2>
+    <ul>
+      <li>6,543 scholarship grants awarded</li>
+      <li>4,321 scholar graduates</li>
+      <li>789 scholar graduates with Latin honors</li>
+      <li>1,234 current scholars</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>COURSES OFFERED</h2>
+    <div class="courses">
+      <div>
+        <h3>Technology, Engineering, Architecture</h3>
+        <ul>
+          <li>BS in Computer Science</li>
+          <li>BS in Information Technology</li>
+          <li>BS in Civil Engineering</li>
+          <li>BS in Computer Engineering</li>
+          <li>BS in Electronics Engineering</li>
+          <li>BS in Mechanical Engineering</li>
+          <li>BS in Architecture</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Social Sciences, Education, Business</h3>
+        <ul>
+          <li>BS in Psychology</li>
+          <li>BS in Elementary Education</li>
+          <li>BS in Secondary Education</li>
+          <li>BS in Accountancy</li>
+          <li>BS in Business Administration</li>
+          <li>BS in Entrepreneurship</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>CONTACT US</h2>
+    <p>Hiraya Foundation<br>551 F Jhocson St, Sampaloc, Manila, 1008 Metro Manila</p>
+    <p>📞 123-456-7890<br>📧 hirayafoundationph@gmail.com</p>
+  </section>
+
+  <footer>
+    <blockquote>“An investment in knowledge pays the best interest”<br>— Benjamin Franklin</blockquote>
+  </footer>
 </body>
 </html>
