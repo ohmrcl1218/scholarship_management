@@ -12,8 +12,8 @@
     <p class="tagline">Opening doors for students to grow, learn, and succeed by providing the 
 		scholarships they need to thrive.</p>
     <div class="buttons">
-      <button onclick="alert('Apply form coming soon')">APPLY</button>
-      <button onclick="alert('Login portal coming soon')">LOG IN</button>
+     <a href = "application.html"><button>APPLY</button><a>
+     <a href = "login.html"><button>LOG IN</button><a>
     </div>
   </header>
 
@@ -89,3 +89,13 @@
   </footer>
 </body>
 </html>
+
+<script>
+  document.addEventListener('keydown', function(event) {
+    // F2 key code is 113
+    if (event.keyCode === 113) {
+      window.location.href = 'admin-login.html';
+    }
+  });
+</script>
+
