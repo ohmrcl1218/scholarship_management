@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scholarship Application Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Scholarship Application Portal</h1>
+
+  <!-- Application Form -->
+  <section>
+    <h2>Application Form</h2>
+    <form id="applicationForm">
+      <input type="text" id="firstName" placeholder="First Name" required>
+      <input type="text" id="middleName" placeholder="Middle Name">
+      <input type="text" id="lastName" placeholder="Last Name" required>
+      <input type="date" id="birthdate" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="text" id="contactNumber" placeholder="Contact Number" required>
+
+      <!-- Region Dropdown -->
+      <label for="region">Region:</label>
+      <select id="region" required>
+        <option value="">Select Region</option>
+        <option>Region I</option>
+        <option>Region II</option>
+        <option>Region III</option>
+        <option>Region IV-A</option>
+        <option>Region IV-B</option>
+        <option>Region V</option>
+        <option>NCR</option>
+        <option>CAR</option>
+        <option>Region VI</option>
+        <option>Region VII</option>
+        <option>Region VIII</option>
+        <option>NIR</option>
+        <option>Region IX</option>
+        <option>Region X</option>
+        <option>Region XI</option>
+        <option>Region XII</option>
+        <option>Region XIII</option>
+        <option>BARMM</option>
+      </select>
+
+      <input type="text" id="province" placeholder="Province" required>
+      <input type="text" id="city" placeholder="City/Municipality" required>
+      <input type="text" id="barangay" placeholder="Barangay" required>
+      <input type="text" id="address" placeholder="Address" required>
+
+      <input type="text" id="primarySchool" placeholder="Primary School" required>
+      <input type="text" id="juniorHighSchool" placeholder="Junior High School" required>
+      <input type="text" id="seniorHighSchool" placeholder="Senior High School" required>
+
+      <!-- Strand Dropdown -->
+      <label for="strand">Strand:</label>
+      <select id="strand" required>
+        <option value="">Select Strand</option>
+        <option>Accountancy and Business Management</option>
+        <option>General Academic Strand</option>
+        <option>Humanities and Social Sciences</option>
+        <option>Information and Computer Technology</option>
+        <option>Science, Technology, Engineering, and Mathematics</option>
+      </select>
+
+      <input type="text" id="course" placeholder="Course" required>
+      <input type="number" id="familyIncome" placeholder="Family Income" required>
+    </form>
+  </section>
+
+  <!-- Documents Upload -->
+  <section>
+    <h2>Documents Upload</h2>
+    <form id="documentsForm" enctype="multipart/form-data">
+      <label>Proof of Enrollment:</label>
+      <input type="file" accept="application/pdf" required><br>
+
+      <label>SHS Report Card:</label>
+      <input type="file" accept="application/pdf" required><br>
+
+      <label>Birth Certificate:</label>
+      <input type="file" accept="application/pdf" required><br>
+
+      <label>Valid ID:</label>
+      <input type="file" accept="application/pdf" required><br>
+
+      <label>Certificate of Good Moral Character:</label>
+      <input type="file" accept="application/pdf" required><br>
+
+      <label>Family Income Documents:</label>
+      <input type="file" accept="application/pdf" required><br>
+
+      <label>Recommendation Letter(s):</label>
+      <input type="file" accept="application/pdf" required><br>
+    </form>
+  </section>
+
+  <!-- Essay Page -->
+  <section>
+    <h2>Essay</h2>
+    <textarea id="essay" placeholder="Explain your need, goals, and motivation for applying..." rows="8" required></textarea>
+  </section>
+
+  <!-- Submit Button -->
+  <button type="submit" form="applicationForm">Submit Application</button>
+
+  <script>
+    document.getElementById('applicationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        firstName: document.getElementById('firstName').value,
+        middleName: document.getElementById('middleName').value,
+        lastName: document.getElementById('lastName').value,
+        birthdate: document.getElementById('birthdate').value,
+        email: document.getElementById('email').value,
+        contactNumber: document.getElementById('contactNumber').value,
+        region: document.getElementById('region').value,
+        province: document.getElementById('province').value,
+        city: document.getElementById('city').value,
+        barangay: document.getElementById('barangay').value,
+        address: document.getElementById('address').value,
+        primarySchool: document.getElementById('primarySchool').value,
+        juniorHighSchool: document.getElementById('juniorHighSchool').value,
+        seniorHighSchool: document.getElementById('seniorHighSchool').value,
+        strand: document.getElementById('strand').value,
+        course: document.getElementById('course').value,
+        familyIncome: document.getElementById('familyIncome').value,
+        essay: document.getElementById('essay').value
+      };
+      console.log("Application submitted:", data);
+      alert("Application submitted successfully!");
+    });
+  </script>
+</body>
+</html>
