@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Admin Login</h1>
+  <form id="adminLoginForm">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email Address" required>
+    
+    <select id="role" required>
+      <option value="">Select Role</option>
+      <option value="Scholarship Administrator">Scholarship Administrator</option>
+      <option value="Reviewer">Reviewer / Committee Member</option>
+      <option value="Finance Officer">Finance Officer</option>
+    </select>
+    
+    <button type="submit">Log In</button>
+  </form>
+
+  <script>
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const credentials = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        role: document.getElementById('role').value
+      };
+      const response = await fetch('/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+      });
+      if (response.ok) {
+        alert('Admin login successful!');
+        // Redirect to admin dashboard
+      } else {
+        alert('Login failed. Please check your details.');
+      }
+    });
+  </script>
+</body>
+</html>
