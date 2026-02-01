@@ -4,164 +4,284 @@
   <meta charset="UTF-8">
   <title>Hiraya Foundation</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== Rise / Fade-up effect ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger effect for multiple children */
+    .fade-up.stagger-1 { transition-delay: 0.2s; }
+    .fade-up.stagger-2 { transition-delay: 0.4s; }
+    .fade-up.stagger-3 { transition-delay: 0.6s; }
+    .fade-up.stagger-4 { transition-delay: 0.8s; }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-	<header class="hero">
-	  <div class="hero-top">
-	    <h1 class="brand">HIRAYA FOUNDATION</h1>
-	  </div>
+  <header class="hero" id="hero">
+    <div class="hero-top fade-up stagger-1">
+      <h1 class="brand" id="brand">HIRAYA FOUNDATION</h1>
+      <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
 
-	  <div class="hero-content">
-	    <div class="hero-left">
-	      <h2>
-	        WHERE<br>
-	        DEDICATION<br>
-	        MEETS<br>
-			OPPORTUNITY
-	      </h2>
-	    </div>
+    <div class="hero-content fade-up stagger-2">
+      <div class="hero-left">
+        <h2>
+          WHERE<br>
+          DEDICATION<br>
+          MEETS<br>
+          OPPORTUNITY
+        </h2>
+      </div>
 
-	    <div class="hero-right">
-	      <p class="tagline">
-	        Opening doors for students to grow, <br> learn, and succeed by providing the <br> scholarship they need to thrive.
-	      </p>
+      <div class="hero-right">
+        <p class="tagline">
+          Opening doors for students to grow, <br> learn, and succeed by providing the <br> scholarship they need to thrive.
+        </p>
 
-	      <div class="buttons">
-	        <a href="application.html" class="btn apply">APPLY ➜</a>
-	        <a href="login.html" class="btn login">LOG IN ➜</a>
-	      </div>
-	    </div>
-	  </div>
-	</header>
-	
-	<section class="who-we-are">
-	  <h2>WHO WE ARE</h2>
-	  <div class="who-content">
+        <div class="buttons">
+          <a href="application.html" class="btn apply">APPLY ➜</a>
+          <a href="login.html" class="btn login">LOG IN ➜</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-	    <div class="who-image">
-	      <img src="/images/logo.png" alt="Hiraya Foundation">
-	    </div>
+  <nav id="navMenu" class="nav-menu">
 
-	    <div class="who-text">
-	      <p>
-	        <strong>Hiraya Foundation</strong> is a Filipino non-profit organization dedicated to nurturing dreams and empowering the next generation. 
-	        We strive to create opportunities that help young Filipinos reach their full potential and make a positive impact on society.
-	      </p>
-	      <p>
-	        At the heart of our work is the <strong>Hiraya Foundation College Scholarship Program</strong>, which provides deserving students with financial support, mentorship, and resources to excel academically. 
-	        Our scholarships recognize talent, perseverance, and potential, helping scholars turn their dreams into reality.
-	      </p>
+    <!-- Top links -->
+    <div class="menu-links">
+      <a href="#hero">HOME</a>
+      <a href="#who-we-are">WHO WE ARE</a>
+      <a href="#offers">WHAT WE OFFER</a>
+      <a href="#partner-schools">OUR PARTNER SCHOOLS</a>
+	  <a href="scholarship.html" class="scholarship-link" target="_blank" rel="noopener">
+	    SCHOLARSHIP
+	  </a>
+    </div>
 
-	      <a href="scholarship.html" class="learn-more-box">
-	        Learn More about<br>
-	        Hiraya Foundation<br>
-	        College Scholarship<br>
-	        Program
-	      </a>
-	    </div>
-	  </div>
-	</section>
+	<!-- Bottom link -->
+	<div class="menu-bottom">
+	  <a href="mailto:hirayafoundationph@gmail.com" class="menu-email">
+	    hirayafoundationph@gmail.com
+	  </a>
+	</div>
+  </nav>
 
-	<section class="offers">
-	  <h2>WHAT WE OFFER</h2>
-
-	  <div class="offers-grid">
-	    <div class="offer">
-	      <div class="star-symbol">✽</div>
-	      <p>
-	        <strong>MONTHLY STIPEND</strong><br>
-	        Scholars receive a monthly allowance to help cover school and living expenses.
-	      </p>
-	    </div>
-
-	    <div class="offer-line"></div>
-
-	    <div class="offer">
-	      <div class="star-symbol">✽</div>
-	      <p>
-	        <strong>INTERNSHIP OPPORTUNITIES</strong><br>
-	        Scholars gain hands-on experience to build skills and explore career paths.
-	      </p>
-	    </div>
-
-	    <div class="offer-line"></div>
-
-	    <div class="offer">
-	      <div class="star-symbol">✽</div>
-	      <p>
-	        <strong>CONFERENCES & SEMINARS</strong><br>
-	        Scholars get opportunities to attend conferences and seminars to expand knowledge and connections.
-	      </p>
-	    </div>
-	  </div>
-	</section>
-
-	<section class="partner-schools">
-	  <h2>OUR PARTNER SCHOOLS</h2>
-	  <p>
-	    The scholarship program collaborates with selected colleges and universities across the Philippines to provide students with opportunities for higher education. Partner institutions include a mix of state universities, private universities, and other recognized schools, ensuring access to quality programs for eligible scholars.
-	  </p>
-
-	  <ul class="schools-grid">
-	    <li>University of the Philippines System (Manila, Diliman)</li>
-	    <li>Ateneo de Manila University</li>
-	    <li>De La Salle University (Manila)</li>
-	    <li>University of Santo Tomas (Manila)</li>
-	    <li>National University (Manila, MOA, Fairview, East Ortigas, Laguna, Lipa, Cebu, Clark)</li>
-	    <li>Polytechnic University of the Philippines (Manila, Taguig)</li>
-	    <li>Technological University of the Philippines (Manila, Taguig)</li>
-	    <li>Mapúa University</li>
-	    <li>Far Eastern University</li>
-	    <li>Adamson University</li>
-	    <li>Philippine Normal University (Manila)</li>
-	    <li>Pamantasan ng Lungsod ng Maynila</li>
-	    <li>Central Luzon State University</li>
-	    <li>Batangas State University</li>
-	    <li>Bicol University</li>
-	    <li>University of San Carlos</li>
-	    <li>Cebu Institute of Technology – University</li>
-	    <li>Silliman University</li>
-	    <li>Mindanao State University</li>
-	    <li>Xavier University – Ateneo de Cagayan</li>
-	  </ul>
-	</section>
-
-	<section class="contact-section">
-	  <div class="contact-left">
-	    <h2>CONTACT US</h2>
-	    <p>
-	      Hiraya Foundation<br>
-	      551 F Jhocson St,<br>
-	      Sampaloc, Manila,<br>
-	      1008 Metro Manila
-	    </p>
-	    <p>
-	      123-456-7890<br>
-	      hirayafoundationph@gmail.com
-	    </p>
-	  </div>
+  <section class="who-we-are fade-up" id="who-we-are">
+    <h2 class="fade-up stagger-1">WHO WE ARE</h2>
+    <div class="who-content">
+      <div class="who-image fade-up stagger-2">
+        <img src="/images/logo.png" alt="Hiraya Foundation">
+      </div>
 	  
-	  <div class="contact-right">
-	    <p class="big-quote-text">
-	      ❝<br>
-		  An investment<br>
-	      in knowledge<br>
-	      pays the<br>
-	      best interest
-	      <span class="author">— Benjamin Franklin</span>
-	    </p>
+	  <div class="who-text">
+	    <div class="fade-up stagger-1">
+			<p>
+			  <strong>Hiraya Foundation</strong> is a Filipino non-profit organization dedicated to nurturing dreams and empowering the next generation. 
+			  We strive to create opportunities that help young Filipinos reach their full potential and make a positive impact on society.<br><br>
+			</p>
+			<p>
+			  At the heart of our work is the <strong>Hiraya Foundation College Scholarship Program</strong>, which provides deserving students with financial support, mentorship, and resources to excel academically. 
+			  Our scholarships recognize talent, perseverance, and potential, helping scholars turn their dreams into reality.
+			</p>
+	    </div>
+
+	    <a href="scholarship.html" class="learn-more-box stagger-2">
+	      Learn More about<br>
+	      Hiraya Foundation<br>
+	      College Scholarship<br>
+	      Program
+	    </a>
 	  </div>
-	</section>
+
+    </div>
+  </section>
+
+  <section class="offers" id="offers">
+    <h2 class="fade-up stagger-1">WHAT WE OFFER</h2>
+    <div class="offers-grid">
+      <div class="offer">
+        <div class="star-symbol fade-up stagger-2">✽</div>
+        <p class="fade-up stagger-2">
+          <strong>MONTHLY STIPEND</strong><br>
+          Scholars receive a monthly allowance to help cover school and living expenses.
+        </p>
+      </div>
+
+      <div class="offer-line fade-up stagger-2"></div>
+
+      <div class="offer">
+        <div class="star-symbol fade-up stagger-3">✽</div>
+        <p class="fade-up stagger-3">
+          <strong>INTERNSHIP OPPORTUNITIES</strong><br>
+          Scholars gain hands-on experience to build skills and explore career paths.
+        </p>
+      </div>
+
+      <div class="offer-line fade-up stagger-3"></div>
+
+      <div class="offer">
+        <div class="star-symbol fade-up stagger-4">✽</div>
+        <p class="fade-up stagger-4">
+          <strong>CONFERENCES & SEMINARS</strong><br>
+          Scholars get opportunities to attend conferences and seminars to expand knowledge and connections.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="partner-schools fade-up" id="partner-schools">
+    <h2 class="fade-up stagger-1">OUR PARTNER SCHOOLS</h2>
+    <p class="fade-up stagger-2">
+      The scholarship program collaborates with selected colleges and universities across the Philippines to provide students with opportunities for higher education...
+    </p>
+
+    <ul class="schools-grid fade-up stagger-3">
+      <li>University of the Philippines System (Manila, Diliman)</li>
+      <li>Ateneo de Manila University</li>
+      <li>De La Salle University (Manila)</li>
+      <li>University of Santo Tomas (Manila)</li>
+      <li>National University (Manila, MOA, Fairview, East Ortigas, Laguna)</li>
+      <li>Polytechnic University of the Philippines (Manila, Taguig)</li>
+      <li>Technological University of the Philippines (Manila, Taguig)</li>
+      <li>Mapúa University</li>
+      <li>Far Eastern University</li>
+      <li>Adamson University</li>
+      <li>San Beda University</li>
+      <li>University of the East (Manila)</li>
+      <li>Philippine Normal University (Manila)</li>
+      <li>Pamantasan ng Lungsod ng Maynila</li>
+      <li>Centro Escolar University</li>
+      <li>University of Makati</li>
+      <li>Lyceum of the Philippines University (Manila, Cavite)</li>
+      <li>Cavite State University (Manila, Cavite)</li>
+      <li>Batangas State University (Main Campus)</li>
+      <li>University of Batangas</li>
+      <li>Laguna State Polytechnic University</li>
+      <li>University of Perpetual Help System DALTA</li>
+      <li>Technological Institute of the Philippines (Quezon City)</li>
+      <li>St. Paul University Manila</li>
+    </ul>
+  </section>
+
+  <section class="contact-section fade-up" id="contact-section">  
+    <div class="contact-left">
+      <h2 class="fade-up stagger-1">CONTACT US</h2>
+      <p class="fade-up stagger-2">
+        Hiraya Foundation<br>
+        551 F Jhocson St,<br>
+        Sampaloc, Manila,<br>
+        1008 Metro Manila
+      </p>
+      <p class="fade-up stagger-3">
+        123-456-7890<br>
+        hirayafoundationph@gmail.com
+      </p>
+    </div>
+    
+    <div class="contact-right">
+      <p class="big-quote-text fade-up stagger-4">
+        ❝<br>
+        An investment<br>
+        in knowledge<br>
+        pays the<br>
+        best interest
+        <span class="author">— Benjamin Franklin</span>
+      </p>
+    </div>
+  </section>
+
+  <script>
+    // ===== Admin shortcut =====
+    document.addEventListener('keydown', function(event) {
+      if (event.keyCode === 113) window.location.href = 'admin-login.html';
+    });
+
+    // ===== Elements =====
+    const navMenu = document.getElementById('navMenu');
+    const hamburger = document.querySelector('.hamburger');
+
+    // ===== Toggle Sidebar Menu =====
+	function toggleMenu() {
+	  navMenu.classList.toggle('active');
+	  hamburger.classList.toggle('active');
+	}
+
+    function closeMenu() {
+      navMenu.classList.remove('active');
+      hamburger.classList.remove('active');
+    }
+
+    // ===== Close menu on link click =====
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // ===== Close menu when clicking outside =====
+    document.addEventListener('click', function(e) {
+      if (navMenu.classList.contains('active') &&
+          !navMenu.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // ===== Scroll-triggered Rise Effect =====
+    function revealOnScroll() {
+      const elements = document.querySelectorAll('.fade-up');
+      const windowHeight = window.innerHeight;
+
+      elements.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) el.classList.add('show');
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // ===== Scrollspy: Highlight nav link for current section =====
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    function highlightNav() {
+      const scrollY = window.scrollY;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${sectionId}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', highlightNav);
+    window.addEventListener('load', highlightNav);
+  </script>
 
 </body>
 </html>
-
-<script>
-  document.addEventListener('keydown', function(event) {
-    // F2 key code is 113
-    if (event.keyCode === 113) {
-      window.location.href = 'admin-login.html';
-    }
-  });
-</script>
-
