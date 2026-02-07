@@ -2,134 +2,2058 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Scholarship Application Portal</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholarship Application Form - Hiraya Foundation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background: #192064;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+
+    .header p {
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+
+    /* Progress Stepper */
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      padding: 30px 50px;
+      background: #fafafa;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: #e0e0e0;
+      z-index: 0;
+    }
+
+    .step.active:not(:last-child)::after {
+      background: #1a237e;
+    }
+
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      color: #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .step.active .step-circle,
+    .step.completed .step-circle {
+      background: #192064;
+      color: white;
+    }
+
+    .step-label {
+      font-size: 1.1rem;
+      color: #666;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .step.active .step-label {
+      color: #192064;
+      font-weight: 600;
+    }
+
+    /* Form Content */
+    .form-content {
+      padding: 30px 50px 20px;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      color: #192064;
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+	  text-align: center;
+    }
+
+    .section-subtitle {
+      color: #192064;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #192064;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    label .required {
+      color: #d32f2f;
+    }
+
+    label .helper-text {
+      color: #666;
+      font-weight: 400;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      font-family: 'Arial', sans-serif;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #192064;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+    }
+
+    /* GWA validation styles */
+    input.invalid-gwa {
+      border-color: #d32f2f !important;
+      background: #ffebee !important;
+    }
+
+    input.invalid-gwa:focus {
+      box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1) !important;
+    }
+
+    .gwa-error {
+      color: #d32f2f;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+      font-weight: 500;
+    }
+
+    .gwa-error.show {
+      display: block;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    textarea {
+      min-height: 400px;
+      resize: vertical;
+	  margin-top: 10px;
+    }
+
+    .file-upload-group {
+      margin-bottom: 20px;
+      padding: 20px;
+      background: #fafafa;
+      border: 2px dashed #e0e0e0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload-group:hover {
+      border-color: #192064;
+      background: #f0f4ff;
+    }
+
+    .file-upload-label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      cursor: pointer;
+	  font-size: 1rem;
+    }
+
+    input[type="file"]::file-selector-button {
+      background: #192064;
+      color: white;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background 0.3s ease;
+	  font-size: 1rem;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: #192064;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: #e3f2fd;
+      border-radius: 6px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 500;
+      color: #192064;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid #e0e0e0;
+	  margin-bottom: 15px;
+    }
+
+    .btn {
+      width: 20%;
+      padding: 15px 40px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-back {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-back:hover {
+      background: #bdbdbd;
+      transform: translateY(-2px);
+    }
+
+    .btn-next,
+    .btn-submit {
+      background: #192064;
+      color: white;
+    }
+
+    .btn-next:hover,
+    .btn-submit:hover {
+      background: #0d1642;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+    }
+
+    .subsection {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .subsection h3 {
+      color: #192064;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #1a237e;
+    }
+
+    .subsection-description {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+
+    .word-count {
+      text-align: right;
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    /* Confirmation Screen Styles */
+    #confirmationScreen {
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .confirmation-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .success-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 40px;
+      background: #4caf50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn 0.5s ease;
+      box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
+      position: relative;
+    }
+
+    .success-icon::before {
+      content: '';
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(76, 175, 80, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .checkmark {
+      width: 60px;
+      height: 60px;
+      stroke: white;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      animation: checkmark 0.6s ease 0.3s forwards;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes checkmark {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .confirmation-title {
+      color: #192064;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      animation: fadeInUp 0.6s ease 0.5s both;
+    }
+
+    .confirmation-subtitle {
+      color: #666;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      animation: fadeInUp 0.6s ease 0.7s both;
+    }
+
+    .reference-box {
+      background: #e3f2fd;
+      border: 2px dashed #1a237e;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 40px auto 0;
+      max-width: 400px;
+      animation: fadeInUp 0.6s ease 0.9s both;
+    }
+
+    .reference-box strong {
+      display: block;
+      color: #1a237e;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .reference-number {
+      font-size: 1.6rem;
+      color: #192064;
+      font-weight: bold;
+      letter-spacing: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .confirmation-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 60px;
+      animation: fadeInUp 0.6s ease 1.1s both;
+      flex-wrap: wrap;
+    }
+
+    .confirmation-btn {
+      padding: 15px 40px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+	  margin-bottom: 0;
+    }
+
+    .btn-home {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-home:hover {
+      background: #bdbdbd;
+      transform: translateY(-2px);
+    }
+
+    .btn-dashboard {
+      background: #192064;
+      color: white;
+    }
+
+    .btn-dashboard:hover {
+      background: #0d1642;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background: white;
+      border-radius: 8px;
+      max-width: 650px;
+      width: 90%;
+      max-height: 85vh;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      background: #192064;
+      color: white;
+      padding: 18px 25px;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      color: white;
+      letter-spacing: 1px;
+    }
+
+    .modal-body {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-content {
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .modal-content p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .modal-content ol {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .modal-content li {
+      margin-bottom: 15px;
+      padding-left: 5px;
+    }
+
+    .modal-content strong {
+      color: #192064;
+      font-weight: 600;
+    }
+
+    .modal-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 20px;
+      background: #e3f2fd;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      border: 2px solid #192064;
+    }
+
+    .modal-checkbox input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .modal-checkbox label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 600;
+      color: #192064;
+      font-size: 1rem;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 15px 40px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-btn-cancel {
+      background: #e0e0e0;
+      color: #555;
+    }
+
+    .modal-btn-cancel:hover {
+      background: #bdbdbd;
+      transform: translateY(-2px);
+    }
+
+    .modal-btn-confirm {
+      background: #192064;
+      color: white;
+    }
+
+    .modal-btn-confirm:hover:not(:disabled) {
+      background: #0d1642;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+    }
+
+    .modal-btn-confirm:disabled {
+      background: #bdbdbd;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      .header {
+        padding: 30px 20px;
+      }
+
+      .header h1 {
+        font-size: 1.6rem;
+      }
+
+      .header p {
+        font-size: 1rem;
+      }
+
+      .stepper {
+        padding: 20px 10px;
+        overflow-x: auto;
+      }
+
+      .step-label {
+        font-size: 1rem;
+      }
+
+      .step-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .form-content {
+        padding: 30px 20px;
+      }
+
+      .form-row,
+      .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .confirmation-buttons {
+        flex-direction: column;
+      }
+
+      .confirmation-btn {
+        width: 100%;
+      }
+
+      .modal-buttons {
+        flex-direction: column;
+      }
+
+      .modal-btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Scholarship Application Portal</h1>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>HIRAYA FOUNDATION</h1>
+      <p>College Scholarship Application Form</p>
+    </div>
 
-  <!-- Application Form -->
-  <section>
-    <h2>Application Form</h2>
-    <form id="applicationForm">
-      <input type="text" id="firstName" placeholder="First Name" required>
-      <input type="text" id="middleName" placeholder="Middle Name">
-      <input type="text" id="lastName" placeholder="Last Name" required>
-      <input type="date" id="birthdate" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="text" id="contactNumber" placeholder="Contact Number" required>
+    <!-- Progress Stepper -->
+    <div class="stepper">
+      <div class="step active" data-step="1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Personal Details</div>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Academic Details</div>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Upload Documents</div>
+      </div>
+      <div class="step" data-step="4">
+        <div class="step-circle">4</div>
+        <div class="step-label">Essay</div>
+      </div>
+    </div>
 
-      <!-- Region Dropdown -->
-      <label for="region">Region:</label>
-      <select id="region" required>
-        <option value="">Select Region</option>
-        <option>Region I</option>
-        <option>Region II</option>
-        <option>Region III</option>
-        <option>Region IV-A</option>
-        <option>Region IV-B</option>
-        <option>Region V</option>
-        <option>NCR</option>
-        <option>CAR</option>
-        <option>Region VI</option>
-        <option>Region VII</option>
-        <option>Region VIII</option>
-        <option>NIR</option>
-        <option>Region IX</option>
-        <option>Region X</option>
-        <option>Region XI</option>
-        <option>Region XII</option>
-        <option>Region XIII</option>
-        <option>BARMM</option>
-      </select>
+    <!-- Form -->
+    <form id="scholarshipForm">
+      <div class="form-content" id="formContent">
+        
+        <!-- SECTION 1: Personal Details -->
+        <div class="form-section active" data-section="1">
+          <h2>Personal Details</h2>
+          <p class="section-subtitle">Basic Information</p>
 
-      <input type="text" id="province" placeholder="Province" required>
-      <input type="text" id="city" placeholder="City/Municipality" required>
-      <input type="text" id="barangay" placeholder="Barangay" required>
-      <input type="text" id="address" placeholder="Address" required>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" id="firstName" required>
+            </div>
+            <div class="form-group">
+			  <label>Middle Name <span class="required">*</span></label>
+			  <input type="text" id="middleName" required>
+			  <small style="color:#666;font-size:0.85rem;">Put "N/A" if not applicable</small>
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" id="lastName" required>
+            </div>
+          </div>
 
-      <input type="text" id="primarySchool" placeholder="Primary School" required>
-      <input type="text" id="juniorHighSchool" placeholder="Junior High School" required>
-      <input type="text" id="seniorHighSchool" placeholder="Senior High School" required>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label>Sex <span class="required">*</span></label>
+              <select id="sex" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth <span class="required">*</span></label>
+              <input type="date" id="birthdate" required>
+            </div>
+            <div class="form-group">
+              <label>Age <span class="required">*</span></label>
+              <input type="number" id="age" readonly>
+            </div>
+          </div>
 
-      <!-- Strand Dropdown -->
-      <label for="strand">Strand:</label>
-      <select id="strand" required>
-        <option value="">Select Strand</option>
-        <option>Accountancy and Business Management</option>
-        <option>General Academic Strand</option>
-        <option>Humanities and Social Sciences</option>
-        <option>Information and Computer Technology</option>
-        <option>Science, Technology, Engineering, and Mathematics</option>
-      </select>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label>Place of Birth <span class="required">*</span></label>
+              <input type="text" id="placeOfBirth" required>
+            </div>
+            <div class="form-group">
+              <label>Height (in cm) <span class="required">*</span></label>
+              <input type="number" id="height" required>
+            </div>
+            <div class="form-group">
+              <label>Weight (in kg) <span class="required">*</span></label>
+              <input type="number" id="weight" required>
+            </div>
+          </div>
 
-      <input type="text" id="course" placeholder="Course" required>
-      <input type="number" id="familyIncome" placeholder="Family Income" required>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label>Mobile Number <span class="required">*</span></label>
+              <input type="tel" id="mobileNumber" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address <span class="required">*</span></label>
+              <input type="email" id="emailAddress" required>
+            </div>
+            <div class="form-group">
+              <label>Facebook URL <span class="required">*</span></label>
+              <input type="text" id="facebookUrl" required>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="subsection">
+            <h3>Present Address</h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Region <span class="required">*</span></label>
+                <select id="region" required>
+                  <option value="">Loading regions...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Province <span class="required">*</span></label>
+                <select id="province" required>
+                  <option value="">Select Region First</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Municipality / City <span class="required">*</span></label>
+                <select id="municipality" required>
+                  <option value="">Select Province First</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Barangay <span class="required">*</span></label>
+                <select id="barangay" required>
+                  <option value="">Select Municipality First</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-3">
+              <div class="form-group">
+                <label>House Number <span class="required">*</span></label>
+                <input type="text" id="houseNumber" required>
+              </div>
+              <div class="form-group">
+                <label>Street <span class="required">*</span></label>
+                <input type="text" id="street" required>
+              </div>
+              <div class="form-group">
+                <label>ZIP Code <span class="required">*</span></label>
+                <input type="text" id="zipCode" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Permanent Address -->
+          <div class="subsection">
+            <h3>Permanent Address</h3>
+            
+            <div class="checkbox-group">
+              <input type="checkbox" id="sameAsPresent">
+              <label for="sameAsPresent">Same as Present Address</label>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Region <span class="required">*</span></label>
+                <select id="permRegion" required>
+                  <option value="">Loading regions...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Province <span class="required">*</span></label>
+                <select id="permProvince" required>
+                  <option value="">Select Region First</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Municipality / City <span class="required">*</span></label>
+                <select id="permMunicipality" required>
+                  <option value="">Select Province First</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Barangay <span class="required">*</span></label>
+                <select id="permBarangay" required>
+                  <option value="">Select Municipality First</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-3">
+              <div class="form-group">
+                <label>House Number <span class="required">*</span></label>
+                <input type="text" id="permHouseNumber" required>
+              </div>
+              <div class="form-group">
+                <label>Street <span class="required">*</span></label>
+                <input type="text" id="permStreet" required>
+              </div>
+              <div class="form-group">
+                <label>ZIP Code <span class="required">*</span></label>
+                <input type="text" id="permZipCode" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: Academic Details -->
+        <div class="form-section" data-section="2">
+          <h2>Academic Details</h2>
+          <p class="section-subtitle">Junior High School</p>
+
+          <div class="form-group">
+            <label>Junior High School Name <span class="required">*</span></label>
+            <input type="text" id="jhsName" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>School ID <span class="required">*</span></label>
+              <input type="text" id="jhsSchoolId" required>
+            </div>
+
+            <div class="form-group">
+              <label>Junior High School Type <span class="required">*</span></label>
+              <select id="jhsType" required>
+                <option value="">Select Type</option>
+                <option value="Public">Public</option>
+                <option value="Private">Private</option>
+              </select>
+            </div>
+          </div>
+
+		    <div class="subsection">
+		      <h3>Senior High School</h3>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="sameAsJHS">
+              <label for="sameAsJHS">Same as Junior High School</label>
+            </div>
+
+		      <div class="form-group">
+		        <label>Senior High School Name <span class="required">*</span></label>
+		        <input type="text" id="shsName" required>
+		      </div>
+
+		      <div class="form-row">
+		        <div class="form-group">
+		          <label>School ID <span class="required">*</span></label>
+		          <input type="text" id="shsSchoolId" required>
+		        </div>
+
+		        <div class="form-group">
+		          <label>Senior High School Type <span class="required">*</span></label>
+		          <select id="shsType" required>
+		            <option value="">Select Type</option>
+		            <option value="Public">Public</option>
+		            <option value="Private">Private</option>
+		          </select>
+		        </div>
+		      </div>
+
+		      <!-- Track + Strand (same row) -->
+		      <div class="form-row">
+		        <div class="form-group">
+		          <label>Track <span class="required">*</span></label>
+		          <select id="track" required>
+		            <option value="">Select Track</option>
+		            <option value="Academic Track">Academic Track</option>
+		            <option value="TVL Track">Technical-Vocational-Livelihood Track</option>
+		            <option value="Sports Track">Sports Track</option>
+		            <option value="Arts and Design Track">Arts and Design Track</option>
+		          </select>
+		        </div>
+
+		        <div class="form-group">
+		          <label>Strand <span class="required">*</span></label>
+		          <select id="strand" required>
+		            <option value="">Select Strand</option>
+		          </select>
+		        </div>
+		      </div>
+
+		      <!-- Grade 12 GWA + Honors (same row) -->
+		      <div class="form-row">
+		        <div class="form-group">
+		          <label>Grade 12 – First Semester GWA <span class="required">*</span></label>
+		          <input type="number" step="0.01" id="grade12GWA" min="0" max="100" required>
+                <div class="gwa-error" id="gwaError">GWA must be at least 90% to be eligible.</div>
+		        </div>
+
+		        <div class="form-group">
+		          <label>Honors Received <span class="required">*</span></label>
+		          <input type="text" id="honorsReceived" readonly required>
+		        </div>
+		      </div>
+		    </div>
+
+          <!-- College / University -->
+          <div class="subsection">
+            <h3>College / University</h3>
+			
+            <div class="form-group">
+              <label>First Choice <span class="required">*</span></label>
+              <select id="college1" required>
+                <option value="">Select College / University</option>
+				<option>University of the Philippines – Diliman</option>
+				<option>University of the Philippines – Manila</option>
+				<option>University of the Philippines – Los Baños</option>
+
+				<option>Ateneo de Manila University</option>
+				<option>De La Salle University – Manila</option>
+				<option>University of Santo Tomas – Manila</option>
+
+				<option>National University – Manila</option>
+				<option>National University – MOA</option>
+				<option>National University – Fairview</option>
+				<option>National University – East Ortigas</option>
+				<option>National University – Laguna</option>
+
+				<option>Polytechnic University of the Philippines – Manila</option>
+				<option>Polytechnic University of the Philippines – Parañaque</option>
+				<option>Polytechnic University of the Philippines – Taguig</option>
+
+				<option>Technological University of the Philippines – Manila</option>
+				<option>Technological University of the Philippines – Taguig</option>
+
+				<option>Mapúa University</option>
+				
+				<option>Far Eastern University – Manila</option>
+				
+				<option>Adamson University</option>
+				<option>San Beda University – Manila</option>
+
+				<option>University of the East – Manila</option>
+				<option>Philippine Normal University – Manila</option>
+
+				<option>Pamantasan ng Lungsod ng Maynila</option>
+				<option>Pamantasan ng Lungsod ng Marikina</option>
+				<option>Pamantasan ng Lungsod ng Pasig</option>
+				<option>Pamantasan ng Lungsod ng Muntinlupa</option>
+				<option>Pamantasan ng Lungsod ng Valenzuela</option>
+
+				<option>Centro Escolar University – Manila</option>
+				
+				<option>University of Makati</option>
+
+				<option>Lyceum of the Philippines University – Manila</option>
+
+				<option>Rizal Technological University – Mandaluyong</option>
+				<option>Rizal Technological University – Pasig</option>
+
+				<option>University of Rizal System – Antipolo</option>
+				<option>University of Rizal System – Tanay</option>
+
+				<option>Cavite State University – Cavite</option>
+				<option>Cavite State University – Manila</option>
+
+				<option>University of Perpetual Help System DALTA – Calamba</option>
+				<option>University of Perpetual Help System DALTA – Molino</option>
+				
+				<option>Laguna State Polytechnic University – Los Baños</option>
+				<option>Batangas State University – Lipa</option>
+				
+				<option>Southern Luzon State University – Lucban</option>
+				<option>Southern Luzon State University – Lucena</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Second Choice</label>
+              <select id="college2">
+                <option value="">Select College / University</option>
+				<option>University of the Philippines – Diliman</option>
+				<option>University of the Philippines – Manila</option>
+				<option>University of the Philippines – Los Baños</option>
+
+				<option>Ateneo de Manila University</option>
+				<option>De La Salle University – Manila</option>
+				<option>University of Santo Tomas – Manila</option>
+
+				<option>National University – Manila</option>
+				<option>National University – MOA</option>
+				<option>National University – Fairview</option>
+				<option>National University – East Ortigas</option>
+				<option>National University – Laguna</option>
+
+				<option>Polytechnic University of the Philippines – Manila</option>
+				<option>Polytechnic University of the Philippines – Parañaque</option>
+				<option>Polytechnic University of the Philippines – Taguig</option>
+
+				<option>Technological University of the Philippines – Manila</option>
+				<option>Technological University of the Philippines – Taguig</option>
+
+				<option>Mapúa University</option>
+
+				<option>Far Eastern University – Manila</option>
+
+				<option>Adamson University</option>
+				<option>San Beda University – Manila</option>
+
+				<option>University of the East – Manila</option>
+				<option>Philippine Normal University – Manila</option>
+
+				<option>Pamantasan ng Lungsod ng Maynila</option>
+				<option>Pamantasan ng Lungsod ng Marikina</option>
+				<option>Pamantasan ng Lungsod ng Pasig</option>
+				<option>Pamantasan ng Lungsod ng Muntinlupa</option>
+				<option>Pamantasan ng Lungsod ng Valenzuela</option>
+
+				<option>Centro Escolar University – Manila</option>
+
+				<option>University of Makati</option>
+
+				<option>Lyceum of the Philippines University – Manila</option>
+
+				<option>Rizal Technological University – Mandaluyong</option>
+				<option>Rizal Technological University – Pasig</option>
+
+				<option>University of Rizal System – Antipolo</option>
+				<option>University of Rizal System – Tanay</option>
+
+				<option>Cavite State University – Cavite</option>
+				<option>Cavite State University – Manila</option>
+
+				<option>University of Perpetual Help System DALTA – Calamba</option>
+				<option>University of Perpetual Help System DALTA – Molino</option>
+
+				<option>Laguna State Polytechnic University – Los Baños</option>
+				<option>Batangas State University – Lipa</option>
+
+				<option>Southern Luzon State University – Lucban</option>
+				<option>Southern Luzon State University – Lucena</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Third Choice</label>
+              <select id="college3">
+                <option value="">Select College / University</option>
+				<option>University of the Philippines – Diliman</option>
+				<option>University of the Philippines – Manila</option>
+				<option>University of the Philippines – Los Baños</option>
+
+				<option>Ateneo de Manila University</option>
+				<option>De La Salle University – Manila</option>
+				<option>University of Santo Tomas – Manila</option>
+
+				<option>National University – Manila</option>
+				<option>National University – MOA</option>
+				<option>National University – Fairview</option>
+				<option>National University – East Ortigas</option>
+				<option>National University – Laguna</option>
+
+				<option>Polytechnic University of the Philippines – Manila</option>
+				<option>Polytechnic University of the Philippines – Parañaque</option>
+				<option>Polytechnic University of the Philippines – Taguig</option>
+
+				<option>Technological University of the Philippines – Manila</option>
+				<option>Technological University of the Philippines – Taguig</option>
+
+				<option>Mapúa University</option>
+
+				<option>Far Eastern University – Manila</option>
+
+				<option>Adamson University</option>
+				<option>San Beda University – Manila</option>
+
+				<option>University of the East – Manila</option>
+				<option>Philippine Normal University – Manila</option>
+
+				<option>Pamantasan ng Lungsod ng Maynila</option>
+				<option>Pamantasan ng Lungsod ng Marikina</option>
+				<option>Pamantasan ng Lungsod ng Pasig</option>
+				<option>Pamantasan ng Lungsod ng Muntinlupa</option>
+				<option>Pamantasan ng Lungsod ng Valenzuela</option>
+
+				<option>Centro Escolar University – Manila</option>
+
+				<option>University of Makati</option>
+
+				<option>Lyceum of the Philippines University – Manila</option>
+
+				<option>Rizal Technological University – Mandaluyong</option>
+				<option>Rizal Technological University – Pasig</option>
+
+				<option>University of Rizal System – Antipolo</option>
+				<option>University of Rizal System – Tanay</option>
+
+				<option>Cavite State University – Cavite</option>
+				<option>Cavite State University – Manila</option>
+
+				<option>University of Perpetual Help System DALTA – Calamba</option>
+				<option>University of Perpetual Help System DALTA – Molino</option>
+
+				<option>Laguna State Polytechnic University – Los Baños</option>
+				<option>Batangas State University – Lipa</option>
+
+				<option>Southern Luzon State University – Lucban</option>
+				<option>Southern Luzon State University – Lucena</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Program -->
+          <div class="subsection">
+            <h3>Program</h3>
+
+            <div class="form-group">
+              <label>First Choice <span class="required">*</span></label>
+              <select id="course1" required>
+                <option value="">Select Program</option>
+                <option>BS in Computer Science</option>
+                <option>BS in Information Technology</option>
+                <option>BS in Civil Engineering</option>
+                <option>BS in Computer Engineering</option>
+                <option>BS in Electronics Engineering</option>
+                <option>BS in Mechanical Engineering</option>
+                <option>BS in Architecture</option>
+                <option>BS in Psychology</option>
+                <option>BS in Elementary Education</option>
+                <option>BS in Secondary Education</option>
+                <option>BS in Business Administration</option>
+                <option>BS in Accountancy</option>
+                <option>BS in Entrepreneurship</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Second Choice</label>
+              <select id="course2">
+                <option value="">Select Program</option>
+                <option>BS in Computer Science</option>
+                <option>BS in Information Technology</option>
+                <option>BS in Civil Engineering</option>
+                <option>BS in Computer Engineering</option>
+                <option>BS in Electronics Engineering</option>
+                <option>BS in Mechanical Engineering</option>
+                <option>BS in Architecture</option>
+                <option>BS in Psychology</option>
+                <option>BS in Elementary Education</option>
+                <option>BS in Secondary Education</option>
+                <option>BS in Business Administration</option>
+                <option>BS in Accountancy</option>
+                <option>BS in Entrepreneurship</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Third Choice</label>
+              <select id="course3">
+                <option value="">Select Program</option>
+                <option>BS in Computer Science</option>
+                <option>BS in Information Technology</option>
+                <option>BS in Civil Engineering</option>
+                <option>BS in Computer Engineering</option>
+                <option>BS in Electronics Engineering</option>
+                <option>BS in Mechanical Engineering</option>
+                <option>BS in Architecture</option>
+                <option>BS in Psychology</option>
+                <option>BS in Elementary Education</option>
+                <option>BS in Secondary Education</option>
+                <option>BS in Business Administration</option>
+                <option>BS in Accountancy</option>
+                <option>BS in Entrepreneurship</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Upload Documents -->
+        <div class="form-section" data-section="3">
+          <h2>Upload Documents</h2>
+          <p class="section-subtitle">Required Documents</p>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Proof of Enrollment (Certificate of Registration / COR) <span class="required">*</span></label>
+            <input type="file" id="proofEnrollment" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">2×2 Picture <span class="required">*</span></label>
+            <input type="file" id="picture" accept="image/png" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Valid ID or School ID <span class="required">*</span></label>
+            <input type="file" id="validId" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Grade 12 Report Card <span class="required">*</span></label>
+            <input type="file" id="reportCard" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">PSA Birth Certificate <span class="required">*</span></label>
+            <input type="file" id="birthCert" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Certificate of Good Moral Character <span class="required">*</span></label>
+            <input type="file" id="moralCert" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Certificate of Good Health <span class="required">*</span></label>
+            <input type="file" id="healthCert" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Certificate of Indigency <span class="required">*</span></label>
+            <input type="file" id="indigencyCert" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Certificate of Income / Income Tax Return (ITR) <span class="required">*</span></label>
+            <input type="file" id="incomeCert" accept="application/pdf" required>
+          </div>
+
+          <div class="file-upload-group">
+            <label class="file-upload-label">Recommendation Letter(s) <span class="required">*</span></label>
+            <input type="file" id="recoLetter" accept="application/pdf" required>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Essay -->
+        <div class="form-section" data-section="4">
+          <h2>Essay</h2>
+          <p class="section-subtitle">Personal Statement</p>
+
+          <div class="form-group">
+            <label>Write one paragraph explaining your need for this scholarship and the reasons you should be considered as a recipient (approximately 150–200 words) <span class="required">*</span></label>
+            <textarea id="essay" required></textarea>
+            <div class="word-count" id="wordCount">Word count: 0</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="form-content">
+        <div class="button-group">
+          <button type="button" class="btn btn-back" id="backBtn" style="display: none;">BACK</button>
+          <button type="button" class="btn btn-next" id="nextBtn">NEXT</button>
+          <button type="button" class="btn btn-submit" id="submitBtn" style="display: none;">SUBMIT</button>
+        </div>
+      </div>
     </form>
-  </section>
 
-  <!-- Documents Upload -->
-  <section>
-    <h2>Documents Upload</h2>
-    <form id="documentsForm" enctype="multipart/form-data">
-      <label>Proof of Enrollment:</label>
-      <input type="file" accept="application/pdf" required><br>
+    <!-- Confirmation Screen (Hidden by default) -->
+    <div id="confirmationScreen" style="display: none;">
+      <div class="confirmation-content">
+        <div class="success-icon">
+          <svg class="checkmark" viewBox="0 0 52 52">
+            <path d="M14 27l7.5 7.5L38 18"/>
+          </svg>
+        </div>
 
-      <label>SHS Report Card:</label>
-      <input type="file" accept="application/pdf" required><br>
+        <h1 class="confirmation-title">YOU HAVE SUCCESSFULLY SUBMITTED YOUR APPLICATION!</h1>
+        
+        <p class="confirmation-subtitle">Please wait for the results to be sent on your email soon.</p>
 
-      <label>Birth Certificate:</label>
-      <input type="file" accept="application/pdf" required><br>
+        <div class="reference-box">
+          <strong>Application Reference Number</strong>
+          <div class="reference-number" id="referenceNumber">HF-2026-00000</div>
+        </div>
 
-      <label>Valid ID:</label>
-      <input type="file" accept="application/pdf" required><br>
+        <div class="confirmation-buttons">
+          <a href="index.html" class="confirmation-btn btn-home">BACK TO HOME</a>
+          <a href="dashboard.html" class="confirmation-btn btn-dashboard">REVIEW APPLICATION</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <label>Certificate of Good Moral Character:</label>
-      <input type="file" accept="application/pdf" required><br>
+  <!-- Terms and Conditions Modal -->
+  <div class="modal-overlay" id="termsModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2>Terms and Conditions</h2>
+      </div>
+      <div class="modal-body">
+        <div class="modal-content">
+          <p>By creating an account and submitting an application, the applicant agrees to the following:</p>
+          
+          <ol>
+            <li><strong>Accuracy of Information</strong> – All information and documents submitted are true, correct, and complete to the best of the applicant's knowledge. Any false or misleading information may result in disqualification.</li>
+            
+            <li><strong>Document Verification</strong> – Submitted documents may be reviewed and verified by the scholarship administrators. Additional documents may be requested if necessary.</li>
+            
+            <li><strong>Eligibility Compliance</strong> – The applicant confirms that all eligibility requirements for the scholarship program have been reviewed and are met prior to application.</li>
+            
+            <li><strong>Use of Personal Information</strong> – Personal information collected shall be processed, stored, and protected in accordance with Republic Act No. 10173, otherwise known as the Data Privacy Act of 2012. Data shall be used solely for scholarship evaluation, verification, communication, and record-keeping purposes.</li>
+            
+            <li><strong>Confidentiality</strong> – All personal information and documents will be treated with confidentiality and will not be shared with unauthorized parties.</li>
+            
+            <li><strong>Application Review Process</strong> – Submission of an application does not guarantee approval. Final decisions are made by the scholarship committee and are final.</li>
+            
+            <li><strong>Consent to Communication</strong> – The applicant agrees to receive official notifications and updates regarding the scholarship through the contact details provided.</li>
+          </ol>
+        </div>
 
-      <label>Family Income Documents:</label>
-      <input type="file" accept="application/pdf" required><br>
+        <div class="modal-checkbox">
+          <input type="checkbox" id="agreeTerms">
+          <label for="agreeTerms">I agree to the Terms and Conditions and consent to the use of my information for scholarship evaluation purposes.</label>
+        </div>
 
-      <label>Recommendation Letter(s):</label>
-      <input type="file" accept="application/pdf" required><br>
-    </form>
-  </section>
-
-  <!-- Essay Page -->
-  <section>
-    <h2>Essay</h2>
-    <textarea id="essay" placeholder="Explain your need, goals, and motivation for applying..." rows="8" required></textarea>
-  </section>
-
-  <!-- Submit Button -->
-  <button type="submit" form="applicationForm">Submit Application</button>
+        <div class="modal-buttons">
+          <button type="button" class="modal-btn modal-btn-cancel" id="cancelBtn">CANCEL</button>
+          <button type="button" class="modal-btn modal-btn-confirm" id="confirmBtn" disabled>CONFIRM</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    document.getElementById('applicationForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = {
-        firstName: document.getElementById('firstName').value,
-        middleName: document.getElementById('middleName').value,
-        lastName: document.getElementById('lastName').value,
-        birthdate: document.getElementById('birthdate').value,
-        email: document.getElementById('email').value,
-        contactNumber: document.getElementById('contactNumber').value,
-        region: document.getElementById('region').value,
-        province: document.getElementById('province').value,
-        city: document.getElementById('city').value,
-        barangay: document.getElementById('barangay').value,
-        address: document.getElementById('address').value,
-        primarySchool: document.getElementById('primarySchool').value,
-        juniorHighSchool: document.getElementById('juniorHighSchool').value,
-        seniorHighSchool: document.getElementById('seniorHighSchool').value,
-        strand: document.getElementById('strand').value,
-        course: document.getElementById('course').value,
-        familyIncome: document.getElementById('familyIncome').value,
-        essay: document.getElementById('essay').value
+      // PSGC API Base URL
+      const PSGC_API = 'https://psgc.gitlab.io/api';
+
+      // Strands by track
+      const strandsByTrack = {
+        'Academic Track': [
+          'Accountancy, Business and Management (ABM)',
+          'Humanities and Social Sciences (HUMSS)',
+          'Science, Technology, Engineering and Mathematics (STEM)',
+          'General Academic Strand (GAS)'
+        ],
+        'Technical-Vocational-Livelihood Track': [
+          'Agri-Fishery Arts',
+          'Home Economics',
+          'Industrial Arts',
+          'Information and Communication Technology'
+        ],
+        'Sports Track': ['Sports Track'],
+        'Arts and Design Track': ['Arts and Design Track']
       };
-      console.log("Application submitted:", data);
-      alert("Application submitted successfully!");
-    });
-  </script>
+
+      // Current step
+      let currentStep = 1;
+
+      // Form elements
+      const form = document.getElementById('scholarshipForm');
+      const sections = document.querySelectorAll('.form-section');
+      const steps = document.querySelectorAll('.step');
+      const nextBtn = document.getElementById('nextBtn');
+      const backBtn = document.getElementById('backBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Modal elements
+      const termsModal = document.getElementById('termsModal');
+      const agreeTermsCheckbox = document.getElementById('agreeTerms');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const confirmBtn = document.getElementById('confirmBtn');
+
+      // ========== PSGC API FUNCTIONS ==========
+
+  	// Load regions on page load
+  	async function loadRegions() {
+  	  try {
+  	    const response = await fetch(`${PSGC_API}/regions/`);
+  	    const regions = await response.json();
+  	    
+  	    const regionSelect = document.getElementById('region');
+  	    const permRegionSelect = document.getElementById('permRegion');
+  	    
+  	    regionSelect.innerHTML = '<option value="">Select Region</option>';
+  	    permRegionSelect.innerHTML = '<option value="">Select Region</option>';
+  	    
+  	    regions.forEach(region => {
+  	      const option1 = document.createElement('option');
+  	      option1.value = region.code;
+  	      option1.textContent = region.name;
+  	      
+  	      const option2 = option1.cloneNode(true);
+  	      
+  	      regionSelect.appendChild(option1);
+  	      permRegionSelect.appendChild(option2);
+  	    });
+  	  } catch (error) {
+  	    console.error('Error loading regions:', error);
+  	    alert('Failed to load regions. Please refresh the page.');
+  	  }
+  	}
+
+  	// Load provinces when region is selected
+  	async function loadProvinces(regionCode, provinceSelectId) {
+  	  try {
+  	    const response = await fetch(`${PSGC_API}/regions/${regionCode}/provinces/`);
+  	    const provinces = await response.json();
+  	    
+  	    const provinceSelect = document.getElementById(provinceSelectId);
+  	    
+  	    // If NCR (no provinces), add a dummy "Metro Manila" option
+  	    if (provinces.length === 0) {
+  	      provinceSelect.innerHTML = '<option value="">Select Province</option>';
+  	      const option = document.createElement('option');
+  	      option.value = regionCode; // Use region code as value
+  	      option.textContent = 'Metro Manila';
+  	      option.dataset.isRegion = 'true'; // Mark this as a region code!
+  	      provinceSelect.appendChild(option);
+  	      return;
+  	    }
+  	    
+  	    // Normal flow for other regions
+  	    provinceSelect.innerHTML = '<option value="">Select Province</option>';
+  	    provinces.forEach(province => {
+  	      const option = document.createElement('option');
+  	      option.value = province.code;
+  	      option.textContent = province.name;
+  	      provinceSelect.appendChild(option);
+  	    });
+  	  } catch (error) {
+  	    console.error('Error loading provinces:', error);
+  	  }
+  	}
+
+  	// Load municipalities when province is selected
+  	async function loadMunicipalities(code, municipalitySelectId, isRegion = false) {
+  	  try {
+  	    let url;
+  	    if (isRegion) {
+  	      // For NCR - use region endpoint
+  	      url = `${PSGC_API}/regions/${code}/cities-municipalities/`;
+  	    } else {
+  	      // For other provinces - use province endpoint
+  	      url = `${PSGC_API}/provinces/${code}/cities-municipalities/`;
+  	    }
+  	    
+  	    const response = await fetch(url);
+  	    const municipalities = await response.json();
+  	    
+  	    const municipalitySelect = document.getElementById(municipalitySelectId);
+  	    municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
+  	    
+  	    municipalities.forEach(municipality => {
+  	      const option = document.createElement('option');
+  	      option.value = municipality.code;
+  	      option.textContent = municipality.name;
+  	      municipalitySelect.appendChild(option);
+  	    });
+  	  } catch (error) {
+  	    console.error('Error loading municipalities:', error);
+  	    alert('Failed to load municipalities. Please try again.');
+  	  }
+  	}
+
+  	// Load barangays when municipality is selected
+  	async function loadBarangays(municipalityCode, barangaySelectId) {
+  	  try {
+  	    const response = await fetch(`${PSGC_API}/cities-municipalities/${municipalityCode}/barangays/`);
+  	    const barangays = await response.json();
+  	    
+  	    const barangaySelect = document.getElementById(barangaySelectId);
+  	    barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+  	    
+  	    barangays.forEach(barangay => {
+  	      const option = document.createElement('option');
+  	      option.value = barangay.code;
+  	      option.textContent = barangay.name;
+  	      barangaySelect.appendChild(option);
+  	    });
+  	  } catch (error) {
+  	    console.error('Error loading barangays:', error);
+  	    alert('Failed to load barangays. Please try again.');
+  	  }
+  	}
+
+  	// Event listeners for Present Address cascading
+  	document.getElementById('region').addEventListener('change', function() {
+  	  if (this.value) {
+  	    loadProvinces(this.value, 'province');
+  	    document.getElementById('province').innerHTML = '<option value="">Loading...</option>';
+  	    document.getElementById('municipality').innerHTML = '<option value="">Select Municipality</option>';
+  	    document.getElementById('barangay').innerHTML = '<option value="">Select Barangay</option>';
+  	  }
+  	});
+
+  	document.getElementById('province').addEventListener('change', function() {
+  	  if (this.value) {
+  	    // Check if the selected option has the isRegion data attribute (Metro Manila)
+  	    const selectedOption = this.options[this.selectedIndex];
+  	    const isRegion = selectedOption.dataset.isRegion === 'true';
+  	    
+  	    loadMunicipalities(this.value, 'municipality', isRegion);
+  	    
+  	    document.getElementById('municipality').innerHTML = '<option value="">Loading...</option>';
+  	    document.getElementById('barangay').innerHTML = '<option value="">Select Barangay</option>';
+  	  }
+  	});
+
+  	document.getElementById('municipality').addEventListener('change', function() {
+  	  if (this.value) {
+  	    loadBarangays(this.value, 'barangay');
+  	    document.getElementById('barangay').innerHTML = '<option value="">Loading...</option>';
+  	  }
+  	});
+
+  	// Event listeners for Permanent Address cascading
+  	document.getElementById('permRegion').addEventListener('change', function() {
+  	  if (this.value) {
+  	    loadProvinces(this.value, 'permProvince');
+  	    document.getElementById('permProvince').innerHTML = '<option value="">Loading...</option>';
+  	    document.getElementById('permMunicipality').innerHTML = '<option value="">Select Municipality</option>';
+  	    document.getElementById('permBarangay').innerHTML = '<option value="">Select Barangay</option>';
+  	  }
+  	});
+
+  	document.getElementById('permProvince').addEventListener('change', function() {
+  	  if (this.value) {
+  	    // Check if the selected option has the isRegion data attribute (Metro Manila)
+  	    const selectedOption = this.options[this.selectedIndex];
+  	    const isRegion = selectedOption.dataset.isRegion === 'true';
+  	    
+  	    loadMunicipalities(this.value, 'permMunicipality', isRegion);
+  	    
+  	    document.getElementById('permMunicipality').innerHTML = '<option value="">Loading...</option>';
+  	    document.getElementById('permBarangay').innerHTML = '<option value="">Select Barangay</option>';
+  	  }
+  	});
+
+  	document.getElementById('permMunicipality').addEventListener('change', function() {
+  	  if (this.value) {
+  	    loadBarangays(this.value, 'permBarangay');
+  	    document.getElementById('permBarangay').innerHTML = '<option value="">Loading...</option>';
+  	  }
+  	});
+
+  	// Same as Present Address checkbox
+  	document.getElementById('sameAsPresent').addEventListener('change', async function() {
+  	  if (this.checked) {
+  	    const region = document.getElementById('region');
+  	    const province = document.getElementById('province');
+  	    const municipality = document.getElementById('municipality');
+  	    const barangay = document.getElementById('barangay');
+  	    
+  	    // Set region
+  	    document.getElementById('permRegion').value = region.value;
+  	    
+  	    // Wait and load provinces
+  	    if (region.value) {
+  	      await loadProvinces(region.value, 'permProvince');
+  	      document.getElementById('permProvince').value = province.value;
+  	      
+  	      // Wait and load municipalities
+  	      if (province.value) {
+  	        // Check if the selected province option has isRegion data attribute
+  	        const selectedOption = province.options[province.selectedIndex];
+  	        const isRegion = selectedOption.dataset.isRegion === 'true';
+  	        
+  	        await loadMunicipalities(province.value, 'permMunicipality', isRegion);
+  	        
+  	        document.getElementById('permMunicipality').value = municipality.value;
+  	        
+  	        // Wait and load barangays
+  	        if (municipality.value) {
+  	          await loadBarangays(municipality.value, 'permBarangay');
+  	          document.getElementById('permBarangay').value = barangay.value;
+  	        }
+  	      }
+  	    }
+  	    
+  	    // Copy other fields
+  	    document.getElementById('permHouseNumber').value = document.getElementById('houseNumber').value;
+  	    document.getElementById('permStreet').value = document.getElementById('street').value;
+  	    document.getElementById('permZipCode').value = document.getElementById('zipCode').value;
+  	  }
+  	});
+  	
+      // ========== OTHER FORM FUNCTIONS ==========
+
+      // Auto-calculate age from birthdate
+      document.getElementById('birthdate').addEventListener('change', function() {
+        const birthDate = new Date(this.value);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        
+        document.getElementById('age').value = age;
+      });
+
+      // GWA validation and honors calculation
+      const gwaInput = document.getElementById('grade12GWA');
+      const gwaError = document.getElementById('gwaError');
+      const honorsField = document.getElementById('honorsReceived');
+
+      function validateGWA() {
+        const gwa = parseFloat(gwaInput.value);
+        
+        if (isNaN(gwa) || gwa === '') {
+          gwaInput.classList.remove('invalid-gwa');
+          gwaError.classList.remove('show');
+          honorsField.value = '';
+          return;
+        }
+        
+        if (gwa < 90 || gwa > 100) {
+          gwaInput.classList.add('invalid-gwa');
+          gwaError.classList.add('show');
+          honorsField.value = '';
+        } else {
+          gwaInput.classList.remove('invalid-gwa');
+          gwaError.classList.remove('show');
+          
+          // Calculate honors
+          if (gwa >= 98 && gwa <= 100) {
+            honorsField.value = 'With Highest Honors';
+          } else if (gwa >= 95 && gwa < 98) {
+            honorsField.value = 'With High Honors';
+          } else if (gwa >= 90 && gwa < 95) {
+            honorsField.value = 'With Honors';
+          }
+        }
+      }
+
+      gwaInput.addEventListener('input', validateGWA);
+      gwaInput.addEventListener('blur', validateGWA);
+
+      // Same as Junior High School checkbox
+      document.getElementById('sameAsJHS').addEventListener('change', function() {
+        if (this.checked) {
+          document.getElementById('shsName').value = document.getElementById('jhsName').value;
+          document.getElementById('shsSchoolId').value = document.getElementById('jhsSchoolId').value;
+          document.getElementById('shsType').value = document.getElementById('jhsType').value;
+        } else {
+          document.getElementById('shsName').value = '';
+          document.getElementById('shsSchoolId').value = '';
+          document.getElementById('shsType').value = '';
+        }
+      });
+
+      // Auto-fill SHS when JHS fields change (if checkbox is checked)
+      document.getElementById('jhsName').addEventListener('input', function() {
+        if (document.getElementById('sameAsJHS').checked) {
+          document.getElementById('shsName').value = this.value;
+        }
+      });
+
+      document.getElementById('jhsSchoolId').addEventListener('input', function() {
+        if (document.getElementById('sameAsJHS').checked) {
+          document.getElementById('shsSchoolId').value = this.value;
+        }
+      });
+
+      document.getElementById('jhsType').addEventListener('change', function() {
+        if (document.getElementById('sameAsJHS').checked) {
+          document.getElementById('shsType').value = this.value;
+        }
+      });
+
+      // Track to Strand cascade
+      document.getElementById('track').addEventListener('change', function() {
+        const strandSelect = document.getElementById('strand');
+        strandSelect.innerHTML = '<option value="">Select Strand</option>';
+        
+        const strands = strandsByTrack[this.value] || [];
+        strands.forEach(strand => {
+          const option = document.createElement('option');
+          option.value = strand;
+          option.textContent = strand;
+          strandSelect.appendChild(option);
+        });
+      });
+
+      // Word count for essay
+      document.getElementById('essay').addEventListener('input', function() {
+        const text = this.value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        document.getElementById('wordCount').textContent = `Word count: ${words}`;
+      });
+
+      // ========== VALIDATION FUNCTION ==========
+      function validateSection(sectionNumber) {
+        const section = document.querySelector(`.form-section[data-section="${sectionNumber}"]`);
+        const requiredInputs = section.querySelectorAll('input[required], select[required], textarea[required]');
+        
+        let isValid = true;
+        let firstInvalidField = null;
+
+        requiredInputs.forEach(input => {
+          // Remove previous error styling
+          input.style.borderColor = '';
+          
+          // Check if field is empty
+          if (!input.value.trim()) {
+            isValid = false;
+            input.style.borderColor = '#d32f2f';
+            input.style.background = '#ffebee';
+            
+            if (!firstInvalidField) {
+              firstInvalidField = input;
+            }
+          } else {
+            input.style.borderColor = '#28a745';
+            input.style.background = 'white';
+          }
+        });
+
+        // Special validation for GWA
+        if (sectionNumber === 2) {
+          const gwa = parseFloat(document.getElementById('grade12GWA').value);
+          if (gwa < 90 || gwa > 100 || isNaN(gwa)) {
+            isValid = false;
+            document.getElementById('grade12GWA').style.borderColor = '#d32f2f';
+            document.getElementById('grade12GWA').style.background = '#ffebee';
+            if (!firstInvalidField) {
+              firstInvalidField = document.getElementById('grade12GWA');
+            }
+          }
+        }
+
+        // If validation fails, scroll to first invalid field and show alert
+        if (!isValid) {
+          if (firstInvalidField) {
+            firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstInvalidField.focus();
+          }
+          alert('Please fill in all required fields before proceeding.');
+        }
+
+        return isValid;
+      }
+
+      // ========== NAVIGATION FUNCTIONS ==========
+      function showStep(step) {
+        sections.forEach((section, index) => {
+          section.classList.remove('active');
+          if (index + 1 === step) {
+            section.classList.add('active');
+          }
+        });
+
+        steps.forEach((stepEl, index) => {
+          stepEl.classList.remove('active');
+          if (index + 1 === step) {
+            stepEl.classList.add('active');
+          }
+          if (index + 1 < step) {
+            stepEl.classList.add('completed');
+          } else {
+            stepEl.classList.remove('completed');
+          }
+        });
+
+        // Update button visibility
+        backBtn.style.display = step === 1 ? 'none' : 'block';
+        nextBtn.style.display = step === 4 ? 'none' : 'block';
+        submitBtn.style.display = step === 4 ? 'block' : 'none';
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Next button with validation
+      nextBtn.addEventListener('click', function() {
+        // Validate current section before moving forward
+        if (validateSection(currentStep)) {
+          if (currentStep < 4) {
+            currentStep++;
+            showStep(currentStep);
+          }
+        }
+      });
+
+      // Back button
+      backBtn.addEventListener('click', function() {
+        if (currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      });
+
+      // Real-time validation feedback
+      document.querySelectorAll('input[required], select[required], textarea[required]').forEach(field => {
+        field.addEventListener('input', function() {
+          if (this.value.trim()) {
+            this.style.borderColor = '#28a745';
+            this.style.background = 'white';
+          }
+        });
+        
+        field.addEventListener('blur', function() {
+          if (!this.value.trim()) {
+            this.style.borderColor = '#d32f2f';
+            this.style.background = '#ffebee';
+          }
+        });
+      });
+
+      // Terms and Conditions Modal - Enable/Disable Confirm Button
+      agreeTermsCheckbox.addEventListener('change', function() {
+        confirmBtn.disabled = !this.checked;
+      });
+
+      // Submit button with validation
+      submitBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Validate final section before showing modal
+        if (validateSection(currentStep)) {
+          termsModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+
+      // Cancel button - Close modal
+      cancelBtn.addEventListener('click', function() {
+        termsModal.classList.remove('active');
+        agreeTermsCheckbox.checked = false;
+        confirmBtn.disabled = true;
+        document.body.style.overflow = 'auto';
+      });
+
+      // Confirm button - Submit form
+      confirmBtn.addEventListener('click', function() {
+        termsModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Generate unique reference number
+        const year = new Date().getFullYear();
+        const randomNum = Math.floor(Math.random() * 90000) + 10000;
+        const referenceNum = `HF-${year}-${randomNum}`;
+        document.getElementById('referenceNumber').textContent = referenceNum;
+
+        // Hide form and stepper, show confirmation
+        document.querySelector('.stepper').style.display = 'none';
+        document.getElementById('formContent').style.display = 'none';
+        document.querySelector('.button-group').parentElement.style.display = 'none';
+        document.getElementById('confirmationScreen').style.display = 'block';
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        console.log('Application submitted successfully!');
+        console.log('Reference Number:', referenceNum);
+      });
+
+      // Close modal when clicking outside
+      termsModal.addEventListener('click', function(e) {
+        if (e.target === termsModal) {
+          cancelBtn.click();
+        }
+      });
+
+      // Allow clicking on steps to navigate
+      steps.forEach((step, index) => {
+        step.addEventListener('click', function() {
+          if (index + 1 <= currentStep || this.classList.contains('completed')) {
+            currentStep = index + 1;
+            showStep(currentStep);
+          }
+        });
+      });
+
+      // Initialize - Load regions when page loads
+      window.addEventListener('DOMContentLoaded', function() {
+        loadRegions();
+        showStep(1);
+      });
+    </script>
+	
 </body>
 </html>

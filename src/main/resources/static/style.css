@@ -221,7 +221,7 @@ section h2 {
   font-size: 1.6rem;
   line-height: 1.5;
   max-width: 1580px;
-  margin: 0 auto 100px auto;
+  margin: 0 auto 70px auto;
   text-align: justify;
   text-align-last: left;
   font-style: italic
@@ -230,7 +230,7 @@ section h2 {
 .schools-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); 
-  gap: 10px 200px; 
+  gap: 10px 100px; 
   list-style-type: disc;
   padding-left: 40px;
   max-width: 2000px; 
