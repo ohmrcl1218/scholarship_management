@@ -1,46 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Login</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Admin Login - Hiraya Foundation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .left-section {
+            flex: 1;
+            background: url('/images/laptop.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+
+        .left-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .left-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            line-height: 1.05;
+        }
+
+        .foundation-title {
+            font-size: 3rem;
+            font-weight: 400;
+            color: white;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+        }
+
+        .year {
+            font-size: 13rem;
+            font-weight: 700;
+            color: #99c5ff;
+            letter-spacing: -1rem;
+            line-height: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .scholarship-text {
+            font-size: 4rem;
+            font-weight: 600;
+            color: white;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .contact-info {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-info div {
+            margin: 5px 0;
+        }
+
+        .right-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+
+        .admin-login-container {
+            background: white;
+            padding: 60px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .admin-login-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #192064;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-group input::placeholder {
+            color: #b0b0b0;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #192064;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        .admin-login-btn {
+            width: 100%;
+            padding: 18px;
+            background: #192064;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .admin-login-btn:hover {
+            background: #0d1642;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+        }
+
+        .admin-login-btn:active {
+            transform: translateY(0);
+        }
+
+        .security-notice {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #1976d2;
+        }
+
+        .security-notice strong {
+            color: #1565c0;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .admin-back-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+        }
+
+        .admin-back-link a {
+            color: #192064;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .admin-back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .role-description {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Role-specific colors */
+        #role option[value="Scholarship Administrator"] {
+            color: #192064;
+            font-weight: 500;
+        }
+
+        #role option[value="Reviewer"] {
+            color: #303f9f;
+            font-weight: 500;
+        }
+
+        #role option[value="Finance Officer"] {
+            color: #1976d2;
+            font-weight: 500;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+
+            .left-section {
+                min-height: 40vh;
+            }
+
+            .year {
+                font-size: 8rem;
+                letter-spacing: -0.8rem;
+            }
+
+            .scholarship-text {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-login-container {
+                padding: 40px 30px;
+            }
+
+            .foundation-title {
+                font-size: 2rem;
+            }
+
+            .year {
+                font-size: 6rem;
+                letter-spacing: -0.6rem;
+            }
+
+            .scholarship-text {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Admin Login</h1>
-  <form id="adminLoginForm">
-    <input type="text" id="name" placeholder="Full Name" required>
-    <input type="email" id="email" placeholder="Email Address" required>
-    
-    <select id="role" required>
-      <option value="">Select Role</option>
-      <option value="Scholarship Administrator">Scholarship Administrator</option>
-      <option value="Reviewer">Reviewer / Committee Member</option>
-      <option value="Finance Officer">Finance Officer</option>
-    </select>
-    
-    <button type="submit">Log In</button>
-  </form>
+    <div class="left-section">
+        <div class="left-content">
+            <div class="foundation-title">Hiraya Foundation</div>
+            <div class="year">2026</div>
+            <div class="scholarship-text">
+                COLLEGE<br>
+                SCHOLARSHIP
+            </div>
+        </div>
+        <div class="contact-info">
+            <div>hirayafoundationph@gmail.com</div>
+            <div>123-456-7890</div>
+        </div>
+    </div>
 
-  <script>
-    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const credentials = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        role: document.getElementById('role').value
-      };
-      const response = await fetch('/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials)
-      });
-      if (response.ok) {
-        alert('Admin login successful!');
-        // Redirect to admin dashboard
-      } else {
-        alert('Login failed. Please check your details.');
-      }
-    });
-  </script>
+    <div class="right-section">
+        <div class="admin-login-container">
+            <h2 class="admin-login-title">ADMIN LOGIN</h2>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                    <div class="error-message" id="nameError">Please enter your full name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your admin email" required>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Admin Role</label>
+                    <select id="role" required>
+                        <option value="">Select your role</option>
+                        <option value="Scholarship Administrator">Scholarship Administrator</option>
+                        <option value="Reviewer">Reviewer / Committee Member</option>
+                        <option value="Finance Officer">Finance Officer</option>
+                    </select>
+                    <div class="role-description">
+                        Select your administrative role within the scholarship program
+                    </div>
+                    <div class="error-message" id="roleError">Please select your role</div>
+                </div>
+
+                <button type="submit" class="admin-login-btn">ACCESS ADMIN PORTAL</button>
+
+                <div class="security-notice">
+                    <strong>Security Notice:</strong> This portal is for authorized personnel only. 
+                    All activities are logged and monitored.
+                </div>
+
+                <div class="admin-back-link">
+                    <a href="index.html">← Back to Main Website</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const roleSelect = document.getElementById('role');
+
+        // Real-time validation
+        nameInput.addEventListener('input', function() {
+            validateField(this, 'nameError');
+        });
+
+        emailInput.addEventListener('input', function() {
+            validateField(this, 'emailError');
+        });
+
+        roleSelect.addEventListener('change', function() {
+            validateField(this, 'roleError');
+        });
+
+        function validateField(field, errorId) {
+            const errorElement = document.getElementById(errorId);
+            
+            if (!field.value.trim()) {
+                field.style.borderColor = '#d32f2f';
+                errorElement.textContent = 'This field is required';
+                errorElement.classList.add('show');
+                return false;
+            }
+
+            // Email validation
+            if (field.type === 'email') {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(field.value)) {
+                    field.style.borderColor = '#d32f2f';
+                    errorElement.textContent = 'Please enter a valid email address';
+                    errorElement.classList.add('show');
+                    return false;
+                }
+            }
+
+            field.style.borderColor = '#28a745';
+            errorElement.classList.remove('show');
+            return true;
+        }
+
+        // Handle form submission
+        adminLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validate all fields
+            const isNameValid = validateField(nameInput, 'nameError');
+            const isEmailValid = validateField(emailInput, 'emailError');
+            const isRoleValid = validateField(roleSelect, 'roleError');
+
+            if (!isNameValid || !isEmailValid || !isRoleValid) {
+                alert('Please fill in all required fields correctly.');
+                return;
+            }
+
+            const credentials = {
+                name: nameInput.value,
+                email: emailInput.value,
+                role: roleSelect.value
+            };
+
+            try {
+                // Simulate API call
+                console.log('Admin login attempt:', credentials);
+                
+                // Simulate loading state
+                const loginBtn = document.querySelector('.admin-login-btn');
+                const originalText = loginBtn.textContent;
+                loginBtn.textContent = 'Authenticating...';
+                loginBtn.disabled = true;
+                
+                // Simulate API delay
+                setTimeout(() => {
+                    // Store admin data in localStorage
+                    localStorage.setItem('adminData', JSON.stringify(credentials));
+                    
+                    alert(`Welcome, ${credentials.name}!\nRole: ${credentials.role}\nAccess granted to admin portal.`);
+                    
+                    // Redirect to admin dashboard
+                    window.location.href = 'admin-dashboard.html';
+                    
+                    // Reset button
+                    loginBtn.textContent = originalText;
+                    loginBtn.disabled = false;
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+
+        // Quick access for development (remove in production)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'k') {
+                // Auto-fill for testing
+                nameInput.value = 'Admin User';
+                emailInput.value = 'admin@hirayafoundation.ph';
+                roleSelect.value = 'Scholarship Administrator';
+                validateField(nameInput, 'nameError');
+                validateField(emailInput, 'emailError');
+                validateField(roleSelect, 'roleError');
+                console.log('Test credentials filled (Ctrl+K)');
+            }
+        });
+
+        // Auto-focus first field on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            nameInput.focus();
+        });
+    </script>
 </body>
 </html>

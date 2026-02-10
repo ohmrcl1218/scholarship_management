@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Hiraya Foundation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f9ff;
+            color: #333;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #192064 0%, #0d1642 100%);
+            color: white;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .dashboard-logo span {
+            color: #99c5ff;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #99c5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #192064;
+        }
+
+        .user-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dashboard Content */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .dashboard-title {
+            color: #192064;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        /* Status Cards */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #192064;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .status-card.submitted {
+            border-left-color: #4caf50;
+        }
+
+        .status-card.review {
+            border-left-color: #ff9800;
+        }
+
+        .status-card.waiting {
+            border-left-color: #2196f3;
+        }
+
+        .status-card.declined {
+            border-left-color: #f44336;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .status-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #192064;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.submitted {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-badge.review {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-badge.waiting {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .status-badge.declined {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .reference-number {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #192064;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        /* Application Details */
+        .application-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: #192064;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f4ff;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        /* Documents Section */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .document-item {
+            background: #f8faff;
+            border: 2px dashed #d1d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .document-item:hover {
+            border-color: #99c5ff;
+            background: #f0f7ff;
+        }
+
+        .document-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #192064;
+        }
+
+        .document-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .document-status {
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .status-verified {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-missing {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Actions Section */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #192064;
+        }
+
+        .action-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #192064;
+            margin-bottom: 10px;
+        }
+
+        .action-desc {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            background: #192064;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #0d1642;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e0e0e0;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 50px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: #192064;
+            margin-bottom: 5px;
+        }
+
+        .timeline-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: #192064;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+            right: auto;
+        }
+
+        /* Footer */
+        .dashboard-footer {
+            background: #192064;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #99c5ff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .user-info {
+                flex-direction: column;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 60px !important;
+                padding-right: 20px !important;
+            }
+
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px !important;
+                right: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="dashboard-logo">Hiraya <span>Foundation</span></div>
+        <div class="user-info">
+            <div class="user-avatar" id="userInitials">JD</div>
+            <div class="user-details">
+                <h3 id="userName">John Dela Cruz</h3>
+                <p id="userEmail">john.delacruz@email.com</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">Log Out</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-container">
+        <h1 class="dashboard-title">Application Dashboard</h1>
+
+        <!-- Status Overview -->
+        <div class="status-grid">
+            <div class="status-card submitted">
+                <div class="status-header">
+                    <div class="status-title">Application Status</div>
+                    <div class="status-badge submitted">Under Review</div>
+                </div>
+                <div class="status-content">
+                    <p>Your scholarship application is currently being reviewed by the committee.</p>
+                    <p class="reference-number">Reference: HF-2026-28745</p>
+                    <p><strong>Submitted:</strong> March 15, 2026</p>
+                </div>
+            </div>
+
+            <div class="status-card waiting">
+                <div class="status-header">
+                    <div class="status-title">Documents Status</div>
+                    <div class="status-badge waiting">2 Pending</div>
+                </div>
+                <div class="status-content">
+                    <p>Most documents have been verified. 2 additional documents requested.</p>
+                    <p><strong>Verified:</strong> 8/10 documents</p>
+                    <p><strong>Deadline:</strong> April 15, 2026</p>
+                </div>
+            </div>
+
+            <div class="status-card review">
+                <div class="status-header">
+                    <div class="status-title">Interview Status</div>
+                    <div class="status-badge review">Scheduled</div>
+                </div>
+                <div class="status-content">
+                    <p>Your interview has been scheduled. Please check your email for details.</p>
+                    <p><strong>Date:</strong> April 5, 2026</p>
+                    <p><strong>Time:</strong> 2:00 PM</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Information -->
+        <section class="application-section">
+            <h2 class="section-title">Personal Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Full Name</span>
+                    <div class="info-value" id="fullName">John Michael Dela Cruz</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email Address</span>
+                    <div class="info-value" id="emailAddress">john.delacruz@email.com</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Mobile Number</span>
+                    <div class="info-value" id="mobileNumber">0917-123-4567</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Date of Birth</span>
+                    <div class="info-value" id="birthDate">May 15, 2004</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Address</span>
+                    <div class="info-value" id="address">123 Main Street, Quezon City, Metro Manila</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic Information -->
+        <section class="application-section">
+            <h2 class="section-title">Academic Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Senior High School</span>
+                    <div class="info-value" id="highSchool">Manila Science High School</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Track & Strand</span>
+                    <div class="info-value" id="trackStrand">Academic Track - STEM</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Grade 12 GWA</span>
+                    <div class="info-value" id="gwa">94.5%</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Preferred College</span>
+                    <div class="info-value" id="college">University of the Philippines - Diliman</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Preferred Program</span>
+                    <div class="info-value" id="program">BS in Computer Science</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documents Status -->
+        <section class="application-section">
+            <h2 class="section-title">Documents Status</h2>
+            <div class="documents-grid">
+                <div class="document-item">
+                    <div class="document-icon">📄</div>
+                    <div class="document-name">Proof of Enrollment</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">📷</div>
+                    <div class="document-name">2×2 Picture</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">🆔</div>
+                    <div class="document-name">Valid ID</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">📊</div>
+                    <div class="document-name">Report Card</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">👶</div>
+                    <div class="document-name">Birth Certificate</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">⭐</div>
+                    <div class="document-name">Good Moral</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">🏥</div>
+                    <div class="document-name">Health Certificate</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">🏠</div>
+                    <div class="document-name">Indigency Certificate</div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">💰</div>
+                    <div class="document-name">Income Certificate</div>
+                    <div class="document-status status-pending">Pending</div>
+                </div>
+                <div class="document-item">
+                    <div class="document-icon">✉️</div>
+                    <div class="document-name">Recommendation Letter</div>
+                    <div class="document-status status-verified">Verified</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Timeline -->
+        <section class="application-section">
+            <h2 class="section-title">Application Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 1, 2026</div>
+                        <div class="timeline-desc">Application period opened</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 15, 2026</div>
+                        <div class="timeline-desc">Application submitted</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 20, 2026</div>
+                        <div class="timeline-desc">Initial screening completed</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 25, 2026</div>
+                        <div class="timeline-desc">Documents verification started</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">April 1, 2026</div>
+                        <div class="timeline-desc">Interview scheduled</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">April 5, 2026</div>
+                        <div class="timeline-desc">Scheduled interview (Upcoming)</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">April 30, 2026</div>
+                        <div class="timeline-desc">Final results announced (Expected)</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="application-section">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="actions-grid">
+                <div class="action-card" onclick="viewApplication()">
+                    <div class="action-icon">📋</div>
+                    <div class="action-title">View Full Application</div>
+                    <div class="action-desc">Review your complete application details and information</div>
+                    <button class="action-btn">View Details</button>
+                </div>
+                <div class="action-card" onclick="uploadDocuments()">
+                    <div class="action-icon">📤</div>
+                    <div class="action-title">Upload Documents</div>
+                    <div class="action-desc">Submit additional or missing required documents</div>
+                    <button class="action-btn">Upload Now</button>
+                </div>
+                <div class="action-card" onclick="contactSupport()">
+                    <div class="action-icon">💬</div>
+                    <div class="action-title">Contact Support</div>
+                    <div class="action-desc">Get help or ask questions about your application</div>
+                    <button class="action-btn">Contact Us</button>
+                </div>
+                <div class="action-card" onclick="printApplication()">
+                    <div class="action-icon">🖨️</div>
+                    <div class="action-title">Print Application</div>
+                    <div class="action-desc">Generate a PDF copy of your application for records</div>
+                    <button class="action-btn">Print PDF</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>Hiraya Foundation College Scholarship Program</p>
+        <div class="footer-links">
+            <a href="index.html">Back to Home</a> |
+            <a href="scholarship.html">Scholarship Details</a> |
+            <a href="mailto:hirayafoundationph@gmail.com">Email Support</a>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.8;">
+            © 2026 Hiraya Foundation. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        // Load user data from localStorage
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('userData')) || {
+                firstName: 'John',
+                lastName: 'Dela Cruz',
+                email: 'john.delacruz@email.com',
+                phone: '09171234567'
+            };
+
+            // Set user initials
+            const initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
+            document.getElementById('userInitials').textContent = initials;
+            
+            // Set user name
+            document.getElementById('userName').textContent = `${userData.firstName} ${userData.lastName}`;
+            document.getElementById('fullName').textContent = `${userData.firstName} ${userData.lastName}`;
+            
+            // Set email
+            document.getElementById('userEmail').textContent = userData.email || 'john.delacruz@email.com';
+            document.getElementById('emailAddress').textContent = userData.email || 'john.delacruz@email.com';
+            
+            // Set phone
+            if (userData.phone) {
+                document.getElementById('mobileNumber').textContent = formatPhoneNumber(userData.phone);
+            }
+        }
+
+        // Format phone number
+        function formatPhoneNumber(phone) {
+            const cleaned = phone.replace(/\D/g, '');
+            if (cleaned.length === 11) {
+                return cleaned.replace(/(\d{4})(\d{3})(\d{4})/, '$1-$2-$3');
+            }
+            return phone;
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                // Clear session data
+                sessionStorage.clear();
+                // Redirect to login page
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Action functions
+        function viewApplication() {
+            alert('Opening full application details...');
+            // In a real app, this would open a modal or new page
+        }
+
+        function uploadDocuments() {
+            alert('Redirecting to document upload page...');
+            // In a real app, this would redirect to upload page
+        }
+
+        function contactSupport() {
+            window.location.href = 'mailto:hirayafoundationph@gmail.com';
+        }
+
+        function printApplication() {
+            alert('Generating PDF...');
+            // In a real app, this would generate and download a PDF
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
+</body>
+</html>
