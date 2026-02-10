@@ -1,14 +1,5 @@
 {
-  "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "MAVEN",
-    "buildCommand": "mvn clean package -DskipTests",
-    "outputPath": "target/scholarship-management-1.0.0.jar"
-  },
-  "deploy": {
-    "startCommand": "java -jar target/scholarship-management-1.0.0.jar",
-    "healthcheckPath": "/api/health",
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 3
+    "builder": "NIXPACKS"
   }
 }
